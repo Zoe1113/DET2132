@@ -278,6 +278,7 @@ void App_SetKeyProcess(void)
     {
         uKeyRelease.bits.SetKeyRelease = 0;
 
+        #if Nation	//长按切换物温室温仅国外模式(Nation=1)有效
         if(	uKeyHold.bits.SetKeyHold && !uErrFlag.bits.Er2)			//如果长按三秒
         {
             Auto_TurnOff_Time_Sel();	//按下关机时间清0
@@ -353,7 +354,8 @@ void App_SetKeyProcess(void)
 					}
                 }
             #endif	
-        }	
+        }
+        #endif
     }
 	else if(!uKeyPress.bits.SetKeyPress && eMain_Task != Task_Memorymode)
 	{
