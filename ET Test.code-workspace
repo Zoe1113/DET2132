@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.c": "c",
+			"include.h": "c",
+			"app_calimode.h": "c",
+			"app_sensorinfo.h": "c",
+			"app_memory.h": "c",
+			"app_errmode.h": "c"
+		}
+	}
+}

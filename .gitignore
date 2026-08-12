@@ -1,0 +1,13 @@
+/Bin/*.sn8
+/Bin/*.out
+/Obj/*.asm
+*.asm
+/Obj/ETTest.plo
+/Obj/ETTest.map
+/Obj/ETTest.lst
+*.sn8
+*.as
+*.i
+*.o
+*.dep
+*.json

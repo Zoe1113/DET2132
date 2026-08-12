@@ -1,0 +1,26 @@
+[Common]
+ICE_MODE =0
+EnableCodeOption =0
+CodeOption_Length =64
+Mask_CodeOption =0xFFFFFFFFFA5A35F1
+OTP_CodeOption =0xFFFFFFFFFA5A35F1
+[CodeOption]
+Items=Security,High_Clk_DIV,High_Clk,Watch_Dog,Low_Power
+Security=0
+High_Clk_DIV=0
+High_Clk=1
+Watch_Dog=5
+Low_Power=0
+
+[Simulation]
+Chip_Series=2
+Security=Enable
+High_Clk_DIV=Fhosc/4
+High_Clk=IHRC_RTC
+Watch_Dog=Enable
+Low_Power=Enable
+
+Noise_Filter=
+Fcpu=
+RST_P0.2=
+LVD=
