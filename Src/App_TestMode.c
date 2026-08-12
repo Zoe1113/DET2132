@@ -150,7 +150,7 @@ void App_TestingMode(void)
 						}
 					}
 				}
-				else //if( eTestmode_num == Foreheadmode  )
+				else 
 				{
 					Get_Forehead_Tp( g_AdcData );
 					if( g_AdcCount == Forehead_Num )
@@ -162,30 +162,6 @@ void App_TestingMode(void)
 						eTestTask_Sta = Test_Calculate;		//额温不采集测量后ntc
 					}
 				}
-				/*else
-				{
-					//其他模式只求平均，只是利用Get_Ear_Tp_Max获取原始值而已
-					Get_Ear_Tp_Max( g_AdcData );
-					if( g_AdcCount == Ear_Num )
-					{
-						if( Probe_Move(Ear_array,Ear_Num) )
-						{
-							uErrFlag.bits.Er3 = 0;
-							g_AdcCount = Adc_Filter(Ear_array, Ear_Num);
-							g_TpCount_avg = Get_Ear_Tp_Avg(g_AdcCount);
-							g_AdcCount = 0;		//清0保证下次可以继续循环
-							g_TpCount = g_TpCount_avg;
-							Adc_Channel_Init(TPTONTC);
-							eTestTask_Sta = Test_Get_Ntc;
-						}
-						else
-						{
-							uErrFlag.g_ErrFlag = 0;		//清除其他错误
-							uErrFlag.bits.Er3 = 1;
-							eTestTask_Sta = Test_Disp;
-						}
-					}
-				}*/
 			}
 			break;
 
