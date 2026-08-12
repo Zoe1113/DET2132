@@ -333,31 +333,7 @@ static int16 Disp_Mem(void)
 		m_AgeSelectNum = (g_DayMem & 0xC0)>>6;
 		g_DayMem &= 0x3F;
 		I2C_Disable();
-	    if(m_mode == Insptectmode || m_mode == Objectmode || m_mode == Blackbodymode)
-		{
-			Clr_Age_Select();
-		}
-		if(m_mode == Earmode || m_mode == Foreheadmode)
-		{
-			if(m_AgeSelectNum == Age_0)    //显示0-3月的图标
-			{
-				lcd_age0_en();
-				lcd_age3_clr();
-				lcd_age36_clr();
-			}
-			else if(m_AgeSelectNum == Age_3)   //显示3-36月的图标
-			{
-				lcd_age0_clr();
-				lcd_age3_en();
-				lcd_age36_clr();
-			}
-			else if(m_AgeSelectNum == Age_36)   //显示36+月的图标
-			{
-				lcd_age0_clr();
-				lcd_age3_clr();
-				lcd_age36_en();
-			}
-		}
+	    Disp_Age_Select(m_AgeSelectNum);
 
 		//显示记忆值
 		g_50ms_Count = DispTime_Init;	//循环显示时间、日期、ntc计时器赋初值

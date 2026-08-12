@@ -30,48 +30,27 @@ void Drv_BZ_Disable(void)
 
 void BZ_Beep50(void)
 {
-#if BZ_HW
 	Drv_BZ_Enable();
 	Delay10ms(14);		//ясЁы140ms
 	Drv_BZ_Disable();
 	Delay10ms(5);		//ясЁы50ms
-#else
-	Drv_BZ_Enable();
-	Delay10ms(14);		//ясЁы140ms
-	Drv_BZ_Disable();
-	Delay10ms(5);		//ясЁы50ms
-#endif
 }
 
 
 void BZ_Beep125(void)
 {
-#if BZ_HW
 	Drv_BZ_Enable();
 	Delay10ms(14);		//ясЁы140ms
 	Drv_BZ_Disable();
 	Delay10ms(14);		//ясЁы140ms
-#else
-	Drv_BZ_Enable();
-	Delay10ms(14);		//ясЁы140ms
-	Drv_BZ_Disable();
-	Delay10ms(14);		//ясЁы140ms
-#endif
 }
 
 void BZ_Beep400(void)
 {
-#if BZ_HW
 	Drv_BZ_Enable();
 	Delay10ms(42);		//ясЁы420ms
 	Drv_BZ_Disable();
 	Delay10ms(14);		//ясЁы140ms
-#else
-	Drv_BZ_Enable();
-	Delay10ms(42);		//ясЁы420ms
-	Drv_BZ_Disable();
-	Delay10ms(14);		//ясЁы140ms
-#endif
 }
 
 #endif

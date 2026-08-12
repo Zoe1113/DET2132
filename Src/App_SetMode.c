@@ -94,64 +94,53 @@ void App_SetMode(void)
 	}
 
 	//开机键按下并抬起后才触发切换设置项并更新显示(ET05/ETH)
-	if( uKeyPress.bits.SetKeyPress && eMain_Task == Task_Unitmode)
+	if( uKeyPress.bits.SetKeyPress )
 	{
 		uKeyPress.bits.SetKeyPress = 0;
 		Auto_TurnOff_Time_Sel();	//按下关机时间清0
 		F_UpdateMenu = 1;
 		eSetTask ++;
-		if (eSetTask > Set_Unit)
-		{
-			eSetTask = Set_End;
-		}
-	
-	}
 
-	if( uKeyPress.bits.SetKeyPress && eMain_Task == Task_Setmode)
-	{
-		uKeyPress.bits.SetKeyPress = 0;
-		Auto_TurnOff_Time_Sel();	//按下关机时间清0
-		F_UpdateMenu = 1;
-		eSetTask ++;
-		//注意不同模式结束任务号不同
-		
-		#if Have_Voice_Func
-			#if Have_VoiceLang_Change
-				if (eSetTask > Set_VoiceLang)
-				{
-					eSetTask = Set_End;
-				}
+		if( eMain_Task == Task_Unitmode )
+		{
+			if (eSetTask > Set_Unit)
+			{
+				eSetTask = Set_End;
+			}
+		}
+		else if( eMain_Task == Task_Setmode )
+		{
+			//注意不同模式结束任务号不同
+			#if Have_Voice_Func
+				#if Have_VoiceLang_Change
+					if (eSetTask > Set_VoiceLang)
+					{
+						eSetTask = Set_End;
+					}
+				#else
+					if (eSetTask > Set_Day)
+					{
+						eSetTask = Set_End;
+					}
+				#endif
 			#else
 				if (eSetTask > Set_Day)
 				{
 					eSetTask = Set_End;
 				}
 			#endif
-		#else
-
-				if (eSetTask > Set_Day)
-				{
-					eSetTask = Set_End;
-				}
-
-
-		#endif
-	}
-
-#if ParamModif
-	if( uKeyPress.bits.SetKeyPress && eMain_Task == Task_ParamModifymode)
-	{
-		uKeyPress.bits.SetKeyPress = 0;
-		Auto_TurnOff_Time_Sel();	//按下关机时间清0
-		F_UpdateMenu = 1;
-		eSetTask ++;
-		//注意不同模式结束任务号不同
-		if (eSetTask > Set_TableNum)
-		{
-			eSetTask = Set_End;
 		}
+	#if ParamModif
+		else if( eMain_Task == Task_ParamModifymode )
+		{
+			//注意不同模式结束任务号不同
+			if (eSetTask > Set_TableNum)
+			{
+				eSetTask = Set_End;
+			}
+		}
+	#endif
 	}
-#endif
 
 	if( uKeyPress.bits.OKeyPress )
 	{
