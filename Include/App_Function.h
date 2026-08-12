@@ -16,9 +16,6 @@ extern uint8 Hex2Bcd[3];	//hex×ªbcdºóbcdÂë´æ´¢Çø
 
 void Tone_Init(void);
 void Fever_alarm(int16 Temp , uint8 Age_Selcet);
-void Select_Age0_alarm(int16 L_Temp);
-void Select_Age36_alarm(int16 L_Temp);
-void Select_Age3_alarm(int16 L_Temp);
 uint8 LeapYear_Judge( uint16 L_Buf );
 void Temp_Relate(void);
 void Emissivity_correction(void);

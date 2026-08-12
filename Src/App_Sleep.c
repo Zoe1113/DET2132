@@ -261,7 +261,6 @@ void App_Sleep(void)
 		    g_AgeSelectNum = Age_36;
 			Port_Ble_En = 0; //蓝牙使能准备
 			High_Precision_Flag = 0;
-			ModeFlag = 0;	//切换模式标志位
 			eSleepTask_Sta = Sleep_false;
 			eMain_Task = Task_InitMode;
 			Forehead_Ear_Check(RESET);	

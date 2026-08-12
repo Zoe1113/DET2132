@@ -44,7 +44,6 @@ uKey3 uKeyRelease;
 uKey4 uKeyContinue;
 
 strKey sSetKey, sOnKey, sHallKey, sMemKey ;
-uint8 ModeFlag = 0;
 uint16 L_OnPressTime = 0;
 unsigned long L_Disp_Ntc; //显示环温
 int16 g_Temp_Disp;
@@ -169,7 +168,7 @@ void APP_Enter_Blackbodymode(void)
 					lcd_ble_en();
 				}
 			#endif
-			ModeFlag = Mode_Human_Age36;
+			g_AgeSelectNum=Age_36;
 			eTestmode_num = Blackbodymode;	//代表进入黑体模式
 			eSleepTask_Sta = Sleep_false;	//设置当前任务状态为初始状态
 			eMain_Task = Task_ReadyMode;

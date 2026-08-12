@@ -152,7 +152,6 @@ void Forehead_Ear_Check(bit cmd)
 		if(Frist_Mode)
 		{
 			Frist_Mode = 0;
-			ModeFlag = 0;
 			g_AgeSelectNum = Age_36;
 			F_Disp_Temp_Status = 0;
 			g_Switch_Temp_Flag = 1;//从耳额温切换到物温室温的标志位

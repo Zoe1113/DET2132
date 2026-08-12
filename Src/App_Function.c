@@ -69,9 +69,9 @@ void Tone_Init(void)
 }
 
 /**************************************************************************
-函数名称：	void Fever_alarm(uint16 Temp)
+函数名称：	void Fever_alarm(int16 Temp, uint8 Age_Selcet)
 函数功能：	发烧报警判断子程序
-输入参数：	g_TpStep
+输入参数：	Temp:温度值  Age_Selcet:年龄段选择
 输出参数：	无
 返回值  ：	无
 占用空间：	TBD
@@ -79,228 +79,50 @@ void Tone_Init(void)
 **************************************************************************/
 void Fever_alarm(int16 Temp , uint8 Age_Selcet)
 {
+	int16 SlightTemp, FeverTemp;
+
 	LED_CloseAll();
 	uStaFlag.bits.Fever = 0;
 
-    if(Age_Selcet == Age_0)
-    {
-        Select_Age0_alarm(Temp);
-    }
-	else if(Age_Selcet == Age_3)
-    {
-        Select_Age3_alarm(Temp);
-    }
-    else if(Age_Selcet == Age_36)
-    {
-		Select_Age36_alarm(Temp);
-    }
-}
+	//按单位(华氏/摄氏)和年龄段选择发烧报警阈值
+	if (uSetFlag.bits.Unit)	//Unit=1单位是F
+	{
+		if(Age_Selcet == Age_0)			{ SlightTemp = (int16)SlightTempF0;  FeverTemp = (int16)FeverTempF0; }
+		else if(Age_Selcet == Age_3)	{ SlightTemp = (int16)SlightTempF3;  FeverTemp = (int16)FeverTempF3; }
+		else							{ SlightTemp = (int16)SlightTempF36; FeverTemp = (int16)FeverTempF36; }
+	}
+	else
+	{
+		if(Age_Selcet == Age_0)			{ SlightTemp = (int16)SlightTempC0;  FeverTemp = (int16)FeverTempC0; }
+		else if(Age_Selcet == Age_3)	{ SlightTemp = (int16)SlightTempC3;  FeverTemp = (int16)FeverTempC3; }
+		else							{ SlightTemp = (int16)SlightTempC36; FeverTemp = (int16)FeverTempC36; }
+	}
 
-/**************************************************************************
-函数名称：	void Select_Age0_alarm(int16 L_Temp)
-函数功能：	0-3个月年龄分段的发烧报警
-输入参数：	g_TpStep
-输出参数：	无
-返回值  ：	无
-占用空间：	TBD
-备    注：	必须在摄氏华氏转化之后，且调整为0.1分辨率后使用
-**************************************************************************/
-void Select_Age0_alarm(int16 L_Temp)
-{
-    if (uSetFlag.bits.Unit)//Unit=1单位是F
-    {
-        //温度＜=99.3显示绿光
-        if ( L_Temp <= (int16)SlightTempF0 )
-        {
-            #if Func_3color
-				LED_Green_En();
-			#endif
-            Disp_SmileFace();
-        }
-        //温度>99.3显示红光
-        else if ( L_Temp > (int16)FeverTempF0 )
-        {
-            #if Func_3color
-				LED_Red_En();
-			#endif
-            Disp_BadFace();
-            uStaFlag.bits.Fever = 1;
-        }
-        //其他显示黄光
-        else
-        {
-            #if Func_3color
-				LED_Yellow_En();
-			#endif  
-            Disp_SmileFace();
-        }
-    }
-    else
-    {
-        //温度<=37.4显示绿光
-        if ( L_Temp <= (int16)SlightTempC0 )
-        {
-            #if Func_3color
-				LED_Green_En();
-			#endif
-            Disp_SmileFace();
-        }
-        //温度>37.4显示红光
-        else if ( L_Temp > (int16)FeverTempC0 )
-        {
-            #if Func_3color
-				LED_Red_En();
-			#endif
-            Disp_BadFace();
-            uStaFlag.bits.Fever = 1;
-        }
-        //其他显示黄光
-        else
-        {
-            #if Func_3color
-				LED_Yellow_En();
-			#endif  
-            Disp_SmileFace();
-        }
-    }
-}
-
-/**************************************************************************
-函数名称：	void Select_Age3_alarm(int16 L_Temp)
-函数功能：	3-36个月年龄分段的发烧报警
-输入参数：	g_TpStep
-输出参数：	无
-返回值  ：	无
-占用空间：	TBD
-备    注：	必须在摄氏华氏转化之后，且调整为0.1分辨率后使用
-**************************************************************************/
-void Select_Age3_alarm(int16 L_Temp)
-{
-    if (uSetFlag.bits.Unit)//Unit=1单位是F
-    {
-        //温度＜=99.6显示绿光
-        if ( L_Temp <= (int16)SlightTempF3 )
-        {
-            #if Func_3color
-				LED_Green_En();
-			#endif
-            Disp_SmileFace();
-        }
-        //温度>101.3显示红光
-        else if ( L_Temp > (int16)FeverTempF3 )
-        {
-            #if Func_3color
-				LED_Red_En();
-			#endif
-            Disp_BadFace();
-            uStaFlag.bits.Fever = 1;
-        }
-        //其他显示黄光
-        else
-        {
-            #if Func_3color
-				LED_Yellow_En();
-			#endif  
-            Disp_SmileFace();
-        }
-    }
-    else
-    {
-        //温度<=37.6显示绿光
-        if ( L_Temp <= (int16)SlightTempC3 )
-        {
-            #if Func_3color
-				LED_Green_En();
-			#endif
-            Disp_SmileFace();
-        }
-        //温度>38.5显示红光
-        else if ( L_Temp > (int16)FeverTempC3 )
-        {
-            #if Func_3color
-				LED_Red_En();
-			#endif
-            Disp_BadFace();
-            uStaFlag.bits.Fever = 1;
-        }
-        //其他显示黄光
-        else
-        {
-            #if Func_3color
-				LED_Yellow_En();
-			#endif  
-            Disp_SmileFace();
-        }
-    }
-}
-
-/**************************************************************************
-函数名称：	void Select_Age36_alarm(int16 L_Temp)
-函数功能：	36+个月年龄分段的发烧报警
-输入参数：	g_TpStep
-输出参数：	无
-返回值  ：	无
-占用空间：	TBD
-备    注：	必须在摄氏华氏转化之后，且调整为0.1分辨率后使用
-**************************************************************************/
-void Select_Age36_alarm(int16 L_Temp)
-{
-    if (uSetFlag.bits.Unit)//Unit=1单位是F
-    {
-        //温度＜=99.9显示绿光
-        if ( L_Temp <= (int16)SlightTempF36 )
-        {
-            #if Func_3color
-				LED_Green_En();
-			#endif
-            Disp_SmileFace();
-        }
-        //温度>103.0显示红光
-        else if ( L_Temp > (int16)FeverTempF36 )
-        {
-            #if Func_3color
-				LED_Red_En();
-			#endif
-            Disp_BadFace();
-            uStaFlag.bits.Fever = 1;
-        }
-        //其他显示黄光
-        else
-        {
-            #if Func_3color
-				LED_Yellow_En();
-			#endif  
-            Disp_SmileFace();
-        }
-    }
-    else
-    {
-        //温度<=37.7显示绿光
-        if ( L_Temp <= (int16)SlightTempC36 )
-        {
-            #if Func_3color
-				LED_Green_En();
-			#endif
-            Disp_SmileFace();
-        }
-        //温度>39.4显示红光
-        else if ( L_Temp > (int16)FeverTempC36 )
-        {
-            #if Func_3color
-				LED_Red_En();
-			#endif
-            Disp_BadFace();
-            uStaFlag.bits.Fever = 1;
-        }
-        //其他显示黄光
-        else
-        {
-            #if Func_3color
-				LED_Yellow_En();
-			#endif  
-            Disp_SmileFace();
-        }
-    }
+	//温度<=微热阈值显示绿光+笑脸
+	if (Temp <= SlightTemp)
+	{
+		#if Func_3color
+			LED_Green_En();
+		#endif
+		Disp_SmileFace();
+	}
+	//温度>发烧阈值显示红光+哭脸
+	else if (Temp > FeverTemp)
+	{
+		#if Func_3color
+			LED_Red_En();
+		#endif
+		Disp_BadFace();
+		uStaFlag.bits.Fever = 1;
+	}
+	//其他显示黄光+笑脸
+	else
+	{
+		#if Func_3color
+			LED_Yellow_En();
+		#endif
+		Disp_SmileFace();
+	}
 }
 
 /**************************************************************************
