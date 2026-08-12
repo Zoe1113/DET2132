@@ -61,7 +61,6 @@
 	#define Func_White				1	//1：开启白色背光，0：开启环形灯
 	#define Func_Probecover 		1 	//1：有耳套功能，0：无耳套功能
 	#define Func_Hall				1   //1：用霍尔切换耳额温，0：用检测杆切换耳额温
-	#define Func_Reverse_Disp		0	//1：开启反显， 0：关闭反显
 	#define Second_LVD 				1	//1：二级电压， 0：一级电压
 	#define Have_Motor      		1   //1：开启震动功能， 0：无震动功能
 	#define Have_Voice_Func 		1   //1：开启语音功能， 0：无语音功能（897字节）

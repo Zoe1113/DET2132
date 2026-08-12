@@ -134,9 +134,6 @@ void APP_Enter_Blackbodymode(void)
 			L_OnPressTime = 0;
 			Clr_Disp();
 			lcd_point_en();	//显示小数点
-			#if Func_Reverse_Disp
-				LED_Reverse_Disp_En();
-			#endif
 			if( uSetFlag.bits.VoiceEnable )
 			{
 				#if Have_Voice_Func

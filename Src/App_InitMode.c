@@ -48,12 +48,7 @@ void App_InitMode(void)
 				Clr_Disp();
 				lcd_bat_en();	//显示低电压符号；
 				Auto_TurnOff_Time_Sel();	//关机时间选择
-				eInitTask_Sta = Init_Err;
-
-				#if Func_Reverse_Disp
-					LED_Reverse_Disp_En();
-				#endif
-				
+				eInitTask_Sta = Init_Err;	
 				#if Have_Voice_Func
                     if(  uSetFlag.bits.VoiceEnable ==1 )
                     {
@@ -65,9 +60,6 @@ void App_InitMode(void)
 			else
 			{
 				Disp_All();
-				#if Func_Reverse_Disp
-					LED_Reverse_Disp_En();
-				#endif
 				F_LED_Enable = Enable;	//开启背光
 				#if  Func_3color
 					LED_Green_En();

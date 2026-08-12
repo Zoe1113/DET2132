@@ -53,11 +53,6 @@ void App_SetMode(void)
             F_Ble_En = 0;
             Port_Ble_En = 0; //蓝牙不使能准备
         #endif
-
-		#if Func_Reverse_Disp
-			LED_Reverse_Disp_En();
-		#endif
-
 		//上电复位由于未使能，故无法播报（设计就是无法播报）
 		Tone_Init();//语音功能
 		

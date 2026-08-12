@@ -82,9 +82,6 @@ void App_Sleep(void)
 				uSetFlag.bits.PowerFirst = 1;
 			}
 			Clr_Disp();
-			#if Func_Reverse_Disp
-				LED_Reverse_Disp_Dis();
-			#endif
 			eSleepTask_Sta = Sleep_waitkey;
 			break;
 
@@ -222,9 +219,6 @@ void App_Sleep(void)
 							eMain_Task = Task_InitMode;
 							eInitTask_Sta = Init_Err;
 
-							#if Func_Reverse_Disp
-								LED_Reverse_Disp_En();
-							#endif
 						}
 						else
 						{

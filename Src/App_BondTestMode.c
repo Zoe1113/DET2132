@@ -60,9 +60,7 @@ void App_BondTestMode(void)
 		//显示测试画面2，并进行Ntc采集
 		case BondTest_Disp2:
 			Disp_Debug2();
-			#if !Func_Reverse_Disp
-				LED_Green_Dis();
-			#endif
+			LED_Green_Dis();
 			#if Func_3color
 				LED_Yellow_En();
 			#endif
@@ -227,9 +225,6 @@ void App_BondTestMode(void)
 
 		//关机，并还原任务状态
 		case BondTest_End:
-			#if Func_Reverse_Disp
-				LED_Reverse_Disp_Dis();
-			#endif
 			uSetFlag.bits.PowerFirst = 1;		//绑定模式不需要不显示OFF的状态
 			eBondTestTask = BondTest_Init;		//恢复当前任务以便下回从第一个任务开始
 			eMain_Task = Task_Sleepmode;		//进入睡眠模式

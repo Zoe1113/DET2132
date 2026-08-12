@@ -325,9 +325,6 @@ void Parm_AutoCheck(void)
 			Param_Check();
 			if( uErrFlag.bits.Er5 || uStaFlag.bits.Identify)
 			{
-				#if Func_Reverse_Disp
-					LED_Reverse_Disp_En();
-				#endif
 				Clr_Disp();
 				Disp_ErrMsg();	//显示错误信息(此处设计为如果初始化成功，则不会显示错误信息，如果依然Er5则报错)
 				Auto_TurnOff_Time_Sel();	//关机时间选择
@@ -340,9 +337,6 @@ void Parm_AutoCheck(void)
 		}
 		else
 		{
-			#if Func_Reverse_Disp
-				LED_Reverse_Disp_En();
-			#endif
 			Clr_Disp();
 			Disp_ErrMsg();	//显示错误信息
 			Auto_TurnOff_Time_Sel();	//关机时间选择

@@ -22,10 +22,8 @@
 **************************************************************************/
 void LED_CloseAll( void )
 {
-	#if !Func_Reverse_Disp
-		LED_Red_Dis();
-		LED_Yellow_Dis();
-		LED_Green_Dis();
-		LED_White_Dis();
-	#endif
+	LED_Red_Dis();
+	LED_Yellow_Dis();
+	LED_Green_Dis();
+	LED_White_Dis();
 }
