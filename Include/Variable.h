@@ -49,7 +49,7 @@
 //磁吸,四色背光,普通LCD，语音，蓝牙，振动
 #if Soft_Code == 677
 	#define OffsetTable2open 		0 	//0:关闭第二张黑体表格   1:打开第二张黑体表格
-	#define ParamModif         		0	//0:关闭后门调参节约空间   1:打开后门调参（599字节）
+	#define ParamModif         		1	//0:关闭后门调参节约空间   1:打开后门调参（599words）
 	#define Check_Parameter			0	//绑定显示校验参数 1：开启，0：关闭
 	#define Func_TakeCoverAutoOn	0   //取下额温罩自动开机，1：开启，0：关闭
 	#define HumanRatio_Num  		20	//人体系数，正常人体系数为20；棒米算法为45
@@ -63,7 +63,7 @@
 	#define Func_Hall				1   //1：用霍尔切换耳额温，0：用检测杆切换耳额温
 	#define Second_LVD 				1	//1：二级电压， 0：一级电压
 	#define Have_Motor      		1   //1：开启震动功能， 0：无震动功能
-	#define Have_Voice_Func 		1   //1：开启语音功能， 0：无语音功能（897字节）
+	#define Have_Voice_Func 		0   //1：开启语音功能， 0：无语音功能（897words）
 	#define Voice_Lang 				0	//1：英文，0：中文
 	#define Have_VoiceLang_Change 	0	//1：有语种切换， 0: 无语种切换
     #define Func_Ble     			1   //1：有蓝牙功能； 0：无蓝牙功能；

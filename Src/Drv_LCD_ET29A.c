@@ -412,7 +412,7 @@ void Disp_High_Precision(uint8 Unit, int16 Temp)
 			//最高位置1
 			if( R_LCD1 )
 			{
-				lcd11 |= 0x01;
+				lcd9 |= 0x01;
 			}
 
 			 //小数点点亮
@@ -519,13 +519,6 @@ void Clr_Disp(void)
     lcd8 = 0x00;
     lcd9 = 0x00;
 	lcd10 = 0x00;
-    lcd11 = 0x00;
-    lcd12 = 0x00;
-    lcd13 = 0x00;
-    lcd14 = 0x00;
-    lcd15 = 0x00;
-    lcd16 = 0x00;
-	lcd17 = 0x00;
 }
 
 /**************************************************************************
@@ -569,13 +562,6 @@ void Disp_All(void)
     lcd8 = 0xff;
     lcd9 = 0xff;
     lcd10 = 0xff;
-    lcd11 = 0xff;
-    lcd12 = 0xff;
-    lcd13 = 0xff;
-    lcd14 = 0xff;
-    lcd15 = 0xff;
-    lcd16 = 0xff;
-	lcd17 = 0xff;
 	if( uSetFlag.bits.Unit_Change )
 	{
 		Disp_Unit();
