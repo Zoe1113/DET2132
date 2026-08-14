@@ -1,8 +1,0 @@
--IClangdCompat
--IInclude
--ID:\software\SN8_C_~1\data\C\include
--DICE_Mode=0
--DSN8P2988=1
--D__clangd__=1
--include
-ClangdCompat/clangd_compat.h

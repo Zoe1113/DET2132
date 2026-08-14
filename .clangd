@@ -1,4 +1,0 @@
-Diagnostics:
-  ClangTidy:
-    Remove: '*'
-  UnusedIncludes: None
