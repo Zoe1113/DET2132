@@ -339,7 +339,8 @@ void App_SetKeyProcess(void)
 							voice_stop();
 							PlayStatueParam(1 , Play_Di,0);
 						#else
-								BZ_Beep125();
+								BZ_Beep50();
+								BZ_Beep50();
 						#endif
 					}
 					else

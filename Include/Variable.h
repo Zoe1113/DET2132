@@ -58,7 +58,7 @@
 	#define Electricity_poweroff    1	//1：上电直接自动关机  0"上电进入设置
 	#define Func_Obj 				1	//1：有物温功能 0：无物温功能
 	#define Func_3color				1	//1：开启3色背光，0：无背光或单色背光
-	#define Func_White				1	//1：开启白色背光，0：开启环形灯
+	#define Func_White				0	//1：开启白色背光，0：开启环形灯
 	#define Func_Probecover 		1 	//1：有耳套功能，0：无耳套功能
 	#define Func_Hall				1   //1：用霍尔切换耳额温，0：用检测杆切换耳额温
 	#define Second_LVD 				1	//1：二级电压， 0：一级电压

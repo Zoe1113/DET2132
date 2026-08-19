@@ -120,8 +120,8 @@ void main(void)
 	{
 		Cal_Inspect_Detect();
 	}
-	//Param_Init();
-	//Delay10ms(100);
+	// Param_Init();
+	// Delay10ms(100);
 	while(1)
 	{
 		//Î¹¹·
