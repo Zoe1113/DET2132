@@ -275,6 +275,7 @@ void App_TestingMode(void)
 					break;
 				case Objectmode:
 					Temp_Relate();
+					//g_TpStep=11000;
 					Obj_MeasureRange_Check();
 					g_TpStep_Disp = CToF(g_TpStep);
 					g_TpStep_Disp = Temp_Resolution_Adjust(g_TpStep_Disp);
