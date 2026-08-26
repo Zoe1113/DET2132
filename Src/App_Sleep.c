@@ -259,6 +259,9 @@ void App_Sleep(void)
 		case Sleep_End:
 		    g_AgeSelectNum = Age_36;
 			Port_Ble_En = 0; //蓝牙使能准备
+			#if Func_Ble
+				T0Init();	//恢复蓝牙图标闪烁的500ms时基
+			#endif
 			High_Precision_Flag = 0;
 			eSleepTask_Sta = Sleep_false;
 			eMain_Task = Task_InitMode;
