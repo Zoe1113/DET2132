@@ -239,6 +239,10 @@ void App_MemoryOnKeyProcess(void)
 		}
 		else
 		{
+			if(eTestmode_num == Earmode)
+			{
+				Adc_Channel_Init(NTCTOTP);
+			}
 			#if Func_Obj
 			if(uErrFlag.bits.Er6)
 			{
@@ -434,6 +438,12 @@ void App_MemKeyProcess(void)
 			Clr_Age_Select();
             lcd4 = DispTable[ 1 ] >> 8;
 		    lcd5 = DispTable[ 1 ];
+			LED_CloseAll();
+			#if Func_White
+				LED_White_En();
+			#elif Func_3color
+				LED_Green_En();		
+			#endif
 			if(eTestmode_num==Airmode)
 			{
 				eReadyTask_Sta = Ready_ReadyOk;
@@ -450,6 +460,8 @@ void App_MemKeyProcess(void)
             if( !F_MemKey_Deal && !uErrFlag.bits.Er2 && !uErrFlag.bits.Er1 && eTestmode_num != Insptectmode )//生产模式无记忆
             {
                 Auto_TurnOff_Time_Sel();	//按下关机时间清0
+				Time_CountDown_5s_timeout(RESET);		//记忆模式打断5s等待，清除倒计时相关标志位
+				g_5s_Count = 0;
                 F_Mem_FirstEnter = 0;	//清首次进入记忆模式标志位
                 eMain_Task = Task_Memorymode;					//置进入记忆模式标志位
                 uErrFlag.g_ErrFlag = 0;		//清错误标志位

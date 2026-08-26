@@ -308,23 +308,13 @@ void GPIO_Init(void)
 **************************************************************************/
 void GPIO_PowerDown( void )
 {
-	#if Func_Hall
-	//按键输入上拉高电平,XIN/XOUT输入不上拉0,E2供电口输出上拉高
+	//关机时仅保留唤醒按键上拉，其余非唤醒脚输出低，降低静态电流
 	//0: input mode, 1: output mode
-	P0M = 0x0C;			//0b0000 1100
+	P0M = 0x1C;			//0b0001 1100
 	//0: disable pullup, 1: enable pullup, pull resistor = 200k
-	P0UR = 0x13;		//0b0001 0011
+	P0UR = 0x23;		//0b0010 0011
 	//0: low level, 1: high level
-	P0 = 0x1F;			//0b0001 1111
-	#else //用检测杆的话，检测杆口输出上拉高
-	//按键输入上拉高电平,XIN/XOUT输入不上拉0,E2供电口输出上拉高
-	//0: input mode, 1: output mode
-	P0M = 0x2C;			//0b0010 1100
-	//0: disable pullup, 1: enable pullup, pull resistor = 200k
-	P0UR = 0x33;		//0b0011 0011
-	//0: low level, 1: high level
-	P0 = 0x3F;			//0b0011 1111
-	#endif
+	P0 = 0x2F;			//0b0010 1111
 
 #if !Func_Ble
 	//白灯输入上拉高，按键输入上拉高电平,BZ/MOSI/MISO/TX/RX/SCK均输出不上拉低，

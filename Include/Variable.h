@@ -44,10 +44,10 @@
 
 #define Distence_En 0     			//1:开启测距功能   0:关闭测距功能
 
-#define Soft_Code 677	//软件代码
+#define Soft_Code 685	//软件代码
 
 //磁吸,四色背光,普通LCD，语音，蓝牙，振动
-#if Soft_Code == 677
+#if Soft_Code == 685
 	#define OffsetTable2open 		0 	//0:关闭第二张黑体表格   1:打开第二张黑体表格
 	#define ParamModif         		0	//0:关闭后门调参节约空间   1:打开后门调参（599words）
 	#define Check_Parameter			0	//绑定显示校验参数 1：开启，0：关闭
@@ -64,7 +64,7 @@
 	#define Second_LVD 				1	//1：二级电压， 0：一级电压
 	#define Have_Motor      		1   //1：开启震动功能， 0：无震动功能
 	#define Have_Voice_Func 		1   //1：开启语音功能， 0：无语音功能（897words）
-	#define Voice_Lang 				0	//1：英文，0：中文
+	#define Voice_Lang 				1	//1：英文，0：中文
 	#define Have_VoiceLang_Change 	0	//1：有语种切换， 0: 无语种切换
     #define Func_Ble     			1   //1：有蓝牙功能； 0：无蓝牙功能；
     #define Nation       			1   //1：国外， 0:国内

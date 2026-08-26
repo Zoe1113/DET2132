@@ -101,8 +101,15 @@ void App_Sleep(void)
 
 		//完全关机状态
 		case Sleep_true:
+			#if Func_Ble
+				F_Ble_En = Disable;
+				Port_Ble_En = 0;		//蓝牙失能
+				Port_Power = 1;		//关闭蓝牙供电使能（低电平有效）
+			#endif
 			Drv_UartTX_Disable();	//关UART功能
+			Drv_UartRX_Disable();	//关UART RX
 			I2C_Disable();		//关I2C
+			FMSPWK = 0;		//禁止I2C总线唤醒，仅允许P0按键唤醒
 			GPIO_PowerDown();	//IO口省电设置
 
 			FCLKMD = 1;			//切到Slow mode
@@ -128,59 +135,57 @@ void App_Sleep(void)
 			FLCDMOD0 = 1 ;
 			FLCDMOD1 = 1 ;		//LCD Mode All OFF
 			FLBTEN = 0 ;		//关低电压检测
+			FT0EN = 0;			//关机期间停止RTC，避免定时唤醒
+			FT0IRQ = 0;		//清RTC中断请求
 			FTC0ENB = 0;		//关TC0 timer
 			FTC1ENB = 0;		//关TC1 timer
 			FTC2ENB = 0;		//关TC2 timer
 			INTEN0 = 0;			//所有中断除能
 			INTEN1 = 0;			//所有中断除能
 			FGIE = 0 ;			//关总中断
-			#if Func_Ble
-			FCPUM1 = 1;		    //绿色模式
-			#else
-			FCPUM0= 1;		    //睡眠模式
-			#endif
+			FCPUM0 = 1;		//进入睡眠，等待P0按键唤醒
 			NOP(2);
 
 			//无按键按下
 			l_buf = 1;
-			#if Func_Ble
-			while(l_buf)
-			{
-				#if  Func_TakeCoverAutoOn
+			// #if Func_Ble
+			// while(l_buf)
+			// {
+			// 	#if  Func_TakeCoverAutoOn
 					
-				while( Port_On && Port_Set && (!Port_Hall || OFF_Flag) )
+			// 	while( Port_On && Port_Set && (!Port_Hall || OFF_Flag) )
 
-				 {
-					if(!Port_Hall || !Port_On)
-					{
-						OFF_Flag = 0;
-					}
-				#else
-				while( Port_On && Port_Set )
-				{
+			// 	 {
+			// 		if(!Port_Hall || !Port_On)
+			// 		{
+			// 			OFF_Flag = 0;
+			// 		}
+			// 	#else
+			// 	while( Port_On && Port_Set )
+			// 	{
 
-				#endif 
-					//喂狗
-		            WDTR = 0x5A;
-					if( FT0IRQ )
-					{
-						FT0IRQ = 0;
-						Update_SysTime();	//系统时间更新
-						FCPUM1 = 1;		//Green mode（不能关T0模块）
-						NOP(2);
-					}
-				 }
-				 Delay50us(4);	//green mode fcpu=32768/4=8k，是normal模式的250分之一，故实际延迟去抖为50ms
-				 #if Func_TakeCoverAutoOn
-				 if( !Port_On || !Port_Set || (Port_Hall && OFF_Flag == 0))
-				 #else
-				 if( !Port_On || !Port_Set )
-				 #endif
-				 {
-					l_buf = 0;
-				 }
-			}
-			#endif
+			// 	#endif 
+			// 		//喂狗
+		    //         WDTR = 0x5A;
+			// 		if( FT0IRQ )
+			// 		{
+			// 			FT0IRQ = 0;
+			// 			Update_SysTime();	//系统时间更新
+			// 			FCPUM1 = 1;		//Green mode（不能关T0模块）
+			// 			NOP(2);
+			// 		}
+			// 	 }
+			// 	 Delay50us(4);	//green mode fcpu=32768/4=8k，是normal模式的250分之一，故实际延迟去抖为50ms
+			// 	 #if Func_TakeCoverAutoOn
+			// 	 if( !Port_On || !Port_Set || (Port_Hall && OFF_Flag == 0))
+			// 	 #else
+			// 	 if( !Port_On || !Port_Set )
+			// 	 #endif
+			// 	 {
+			// 		l_buf = 0;
+			// 	 }
+			// }
+			// #endif
 
 			FSTPHX = 0;		//开IHRC
 			NOP(2);

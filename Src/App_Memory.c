@@ -57,7 +57,6 @@ void App_Memory(void)
 	if(F_Mem_FirstEnter==0)
 	{
 		//耳温切换到tp通道采集
-		F_Mem_FirstEnter = 1;	//置已进入标志位
 		F_MemNo_Disp = 0;		//首次进入显示记忆序号
 		Mem_Init();				//初始化记忆参数
 
@@ -80,8 +79,8 @@ void App_Memory(void)
 			L_Temp = Disp_Mem();
 			if( L_Temp )
 			{
-				if( g_MonthMem_momeory & 0x20 )                  //耳温
-					Fever_alarm(L_Temp ,g_AgeSelectNum);
+				if( m_mode == Earmode || m_mode == Foreheadmode)
+					Fever_alarm(L_Temp ,m_AgeSelectNum);
 				else
 				{
 					LED_CloseAll();
@@ -99,6 +98,7 @@ void App_Memory(void)
 			//记忆为空，显示---
 			Disp_MemNo();
 		}
+		F_Mem_FirstEnter = 1;	//置已进入标志位
 		//设置标志位，等效于完成一次"按下→抬起"循环
 		F_MemNo_Disp = 0;	//允许下次按键按下时刷新序号
 		F_Mem_Disp = 1;		//防止残留的MemKeyRelease重复触发显示
@@ -204,7 +204,7 @@ static void Disp_MemNo(void)
         Disp_Null();
         F_DispNtc_Time_Date_En = Disable;  //2023-02-22 无记忆状态下，进入记忆查看，显示异常
         Clr_ModeSign(); //2023-02-22
-        if(  uSetFlag.bits.VoiceEnable ==1 )
+		if( uSetFlag.bits.VoiceEnable == 1 && (F_Mem_FirstEnter || F_MemNull) )
         {
             #if Have_Voice_Func
 				voice_stop();
