@@ -44,11 +44,15 @@ uint16 g_DiDo;		//数据段
 void PlayStatueParam(uint8 SetGetFlag, ePlayVoice StatueIn, ePlayVoice *pStatueOut)
 {
     static ePlayVoice StatueParam[4];   //3--最大设置参数深度
+    static uint16 DiDoParam[4];
     static int8 SetStatueParamNo = 0, GetStatueParamNo = 0;
     if(2 == SetGetFlag)
     {
         for(uint8 i = 0;i<4;i++)
+        {
             StatueParam[i] = 0;
+            DiDoParam[i] = 0;
+        }
         SetStatueParamNo = 0;
         GetStatueParamNo = 0;
     }
@@ -57,6 +61,7 @@ void PlayStatueParam(uint8 SetGetFlag, ePlayVoice StatueIn, ePlayVoice *pStatueO
         if(SetStatueParamNo < 3)
         {
             StatueParam[SetStatueParamNo] = StatueIn;
+            DiDoParam[SetStatueParamNo] = g_DiDo;
             SetStatueParamNo++;
         }
     }
@@ -66,6 +71,8 @@ void PlayStatueParam(uint8 SetGetFlag, ePlayVoice StatueIn, ePlayVoice *pStatueO
         {
             *pStatueOut = StatueParam[GetStatueParamNo];
             StatueParam[GetStatueParamNo] = 0;
+            g_DiDo = DiDoParam[GetStatueParamNo];
+            DiDoParam[GetStatueParamNo] = 0;
             if(StatueParam[GetStatueParamNo+1])
                 GetStatueParamNo++;
             else
