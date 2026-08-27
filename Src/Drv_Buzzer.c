@@ -8,8 +8,6 @@
 **************************************************************************/
 #include "Include.h"
 
-#if !Have_Voice_Func
-
 #if BZ_HW
 
 void Drv_BZ_Enable(void)
@@ -26,7 +24,6 @@ void Drv_BZ_Disable(void)
 	Port_BZ = 0;
 }
 
-#endif
 
 void BZ_Beep50(void)
 {

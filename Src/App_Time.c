@@ -180,10 +180,13 @@ void Auto_TurnOff_Time_Sel(void)
 **************************************************************************/
 void Led_CountDown_3s(void)
 {
-	g_3s_Count --;
-	if( !g_3s_Count )
+	if( g_3s_Count )
 	{
-		LED_CloseAll();
+		g_3s_Count --;
+		if( !g_3s_Count )
+		{
+			LED_CloseAll();
+		}
 	}
 }
 

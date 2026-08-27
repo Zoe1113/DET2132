@@ -808,6 +808,7 @@ void Disp_VoiceSign()
         
 		lcd_voice_clr();		
 		lcd_sound_off_clr();
+		lcd_voice_en();
     }
     else
     {

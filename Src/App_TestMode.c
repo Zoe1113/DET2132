@@ -363,6 +363,28 @@ void App_TestingMode(void)
 							PlayStatueParam(1 , Play_Temp,0);
 						}
 					}
+					else
+					{
+						if( uErrFlag.bits.Hi || uStaFlag.bits.Fever )
+						{
+							uStaFlag.bits.Fever = 0;
+							BZ_Beep125();
+							BZ_Beep50();
+							BZ_Beep50();
+							BZ_Beep50();
+						}
+						else if( uErrFlag.g_ErrFlag || uErrFlag.bits.Lo )
+						{
+							BZ_Beep50();
+							BZ_Beep50();
+							BZ_Beep50();
+							BZ_Beep50();
+						}
+						else
+						{
+							BZ_Beep125();
+						}
+					}
                 #else
 					if( uErrFlag.bits.Hi || uStaFlag.bits.Fever )
 					{

@@ -128,7 +128,7 @@ void App_ReadyMode(void)
 			g_3s_Count = CountDown_3s;	//开启背光3s倒计时
 			
 
-		#if !Have_Voice_Func
+		
 			if(eTestmode_num == Earmode || eTestmode_num == Blackbodymode)//测量结束后有蜂鸣声
 			{
 				if(uSetFlag.bits.VoiceEnable == 1)
@@ -137,7 +137,7 @@ void App_ReadyMode(void)
 					BZ_Beep50();		//蜂鸣2声
 				}
 			}
-		#endif
+		
 
 			//if(eTestmode_num == Insptectmode ||  eTestmode_num == Foreheadmode)
 			if(eTestmode_num != Earmode && eTestmode_num != Blackbodymode)

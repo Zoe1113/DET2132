@@ -412,9 +412,9 @@ void App_MemKeyProcess(void)
         if(	uKeyHold.bits.MemKeyHold && !uErrFlag.bits.Er2 && !uErrFlag.bits.Er6&&!F_MemKey_Deal )			//如果长按三秒
         {
 			F_MemKey_Deal = 1;
-			uKeyHold.bits.SetKeyHold = 0;
-			sSetKey.g_Key_Hold_cnt = 0;	//按键计时清0保证再次长按3s
-			uKeyRelease.bits.SetKeyRelease = 0;
+			uKeyHold.bits.MemKeyHold = 0;
+			sMemKey.g_Key_Hold_cnt = 0;	//按键计时清0保证再次长按3s
+			uKeyRelease.bits.MemKeyRelease = 0;
 			Auto_TurnOff_Time_Sel();
 			uSetFlag.bits.VoiceEnable =	~uSetFlag.bits.VoiceEnable;
 			Voice_Show_Init();	//声音开关
@@ -445,6 +445,7 @@ void App_MemKeyProcess(void)
 			#elif Func_3color
 				LED_Green_En();		
 			#endif
+			g_3s_Count = CountDown_3s;	//开启背光
 			if(eTestmode_num==Airmode)
 			{
 				eReadyTask_Sta = Ready_ReadyOk;
