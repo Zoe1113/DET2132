@@ -405,71 +405,69 @@ void App_SetKeyProcess(void)
 void App_MemKeyProcess(void)
 {
     static uint8 F_MemKey_Deal=0;		//记忆键长按处理
-    //记忆键长按3s开关蜂鸣
+    //记忆键长按3s进入记忆查看
     if( uKeyPress.bits.MemKeyPress )									//开机键按下
     {
         uKeyRelease.bits.MemKeyRelease = 0;
-        if(	uKeyHold.bits.MemKeyHold && !uErrFlag.bits.Er2 && !uErrFlag.bits.Er6&&!F_MemKey_Deal )			//如果长按三秒
-        {
+
+		if( uKeyHold.bits.MemKeyHold &&!F_MemKey_Deal && !uErrFlag.bits.Er2 && !uErrFlag.bits.Er6 && eTestmode_num != Insptectmode )//生产模式无记忆
+		{
 			F_MemKey_Deal = 1;
 			uKeyHold.bits.MemKeyHold = 0;
 			sMemKey.g_Key_Hold_cnt = 0;	//按键计时清0保证再次长按3s
 			uKeyRelease.bits.MemKeyRelease = 0;
-			Auto_TurnOff_Time_Sel();
-			uSetFlag.bits.VoiceEnable =	~uSetFlag.bits.VoiceEnable;
-			Voice_Show_Init();	//声音开关
-            
-            Disp_Ready();	//首次开机必须显示_ _._
-            Disp_ModeSign();	//显示模式符号
-            Disp_Age_Select(g_AgeSelectNum);
-        }
-        else if(!uKeyHold.bits.MemKeyHold && !uErrFlag.bits.Er2 && !uErrFlag.bits.Er6&&!F_MemKey_Deal&&eMain_Task == Task_ReadyMode&&eTestmode_num !=Insptectmode)
-        {
-            //Clr_Disp();
-			lcd_pc_clr();	//消隐耳套符号
-			
-			lcd_smileface_clr();
-			lcd_badface_clr();
-			lcd_unit_c_clr();
-			lcd_unit_f_clr();
-			lcd_unit_cf_clr();
-			Clr_Disp888();
-			Clr_ModeSign();
-			Clr_Age_Select();
+			Auto_TurnOff_Time_Sel();	//按下关机时间清0
+			Time_CountDown_5s_timeout(RESET);		//记忆模式打断5s等待，清除倒计时相关标志位
+			g_5s_Count = 0;
 			F_Disp_Dash = Disable;
-            lcd4 = DispTable[ 1 ] >> 8;
-		    lcd5 = DispTable[ 1 ];
-			LED_CloseAll();
-			#if Func_White
-				LED_White_En();
-			#elif Func_3color
-				LED_Green_En();		
-			#endif
-			g_3s_Count = CountDown_3s;	//开启背光
-			if(eTestmode_num==Airmode)
-			{
-				eReadyTask_Sta = Ready_ReadyOk;
-			}
+			F_Mem_FirstEnter = 0;	//清首次进入记忆模式标志位
+			eMain_Task = Task_Memorymode;					//置进入记忆模式标志位
+			uErrFlag.g_ErrFlag = 0;		//清错误标志位
+			eReadyTask_Sta = Ready_ReadyOk;
+		}
+        // else if(!uKeyHold.bits.MemKeyHold && !uErrFlag.bits.Er2 && !uErrFlag.bits.Er6&&!F_MemKey_Deal&&eMain_Task == Task_ReadyMode&&eTestmode_num !=Insptectmode)
+        // {
+        //     //Clr_Disp();
+		// 	lcd_pc_clr();	//消隐耳套符号
 			
-        }
+		// 	lcd_smileface_clr();
+		// 	lcd_badface_clr();
+		// 	lcd_unit_c_clr();
+		// 	lcd_unit_f_clr();
+		// 	lcd_unit_cf_clr();
+		// 	Clr_Disp888();
+		// 	Clr_ModeSign();
+		// 	Clr_Age_Select();
+		// 	F_Disp_Dash = Disable;
+        //     lcd4 = DispTable[ 1 ] >> 8;
+		//     lcd5 = DispTable[ 1 ];
+		// 	LED_CloseAll();
+		// 	#if Func_White
+		// 		LED_White_En();
+		// 	#elif Func_3color
+		// 		LED_Green_En();		
+		// 	#endif
+		// 	g_3s_Count = CountDown_3s;	//开启背光
+		// 	if(eTestmode_num==Airmode)
+		// 	{
+		// 		eReadyTask_Sta = Ready_ReadyOk;
+		// 	}
+			
+        // }
     }
-    //记忆键短按进入记忆查看
+    //记忆键短按开关蜂鸣
     else
     {
         if(uKeyRelease.bits.MemKeyRelease)
         {
             uKeyRelease.bits.MemKeyRelease = 0;
-			if( !F_MemKey_Deal && !uErrFlag.bits.Er2 && !uErrFlag.bits.Er6 && eTestmode_num != Insptectmode )//生产模式无记忆
-            {
-                Auto_TurnOff_Time_Sel();	//按下关机时间清0
-				Time_CountDown_5s_timeout(RESET);		//记忆模式打断5s等待，清除倒计时相关标志位
-				g_5s_Count = 0;
-				F_Disp_Dash = Disable;
-                F_Mem_FirstEnter = 0;	//清首次进入记忆模式标志位
-                eMain_Task = Task_Memorymode;					//置进入记忆模式标志位
-                uErrFlag.g_ErrFlag = 0;		//清错误标志位
-                eReadyTask_Sta = Ready_ReadyOk;
-            }
+
+			if(!uErrFlag.bits.Er2 && !uErrFlag.bits.Er6&&!F_MemKey_Deal )			//如果长按三秒
+			{
+				Auto_TurnOff_Time_Sel();
+				uSetFlag.bits.VoiceEnable =	~uSetFlag.bits.VoiceEnable;
+				Voice_Show_Init();	//声音开关
+			}
             F_MemKey_Deal =0;
         }
     }
