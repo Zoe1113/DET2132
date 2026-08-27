@@ -84,7 +84,7 @@ void Voice_Show_Init(void)
 		lcd_voice_en();
 		lcd_sound_off_en();
 
-			
+		if( eTestmode_num != Earmode && eTestmode_num != Blackbodymode )
 			// ´ò¿ªÕð¶¯
 			g_MotorSystick = Vibration_time;
 		
