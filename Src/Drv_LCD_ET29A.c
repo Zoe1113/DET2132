@@ -789,6 +789,7 @@ void Disp_Ready(void)
     lcd9 = 0x00;
 	lcd_smileface_clr();	//清哭笑脸（从测试态退出）
 	lcd_badface_clr();
+	lcd_point_en();
     lcd_mem_clr();   //清M标志（从记忆态退出）
 }
 
