@@ -58,8 +58,10 @@ void App_ReadyMode(void)
 			HalKey_KeyClr();               //清除所有按键信息
 			g_50ms_Count = DispTime_Init;	//循环显示时间、日期、ntc计时器赋初值
 			#if Func_Ble
-			if(eTestmode_num != Insptectmode) //生产模式准备状态关闭蓝牙
-                F_Ble_En = Enable;		//开启蓝牙
+			if(eTestmode_num == Earmode || eTestmode_num == Foreheadmode || eTestmode_num == Objectmode)
+				F_Ble_En = Enable;		//仅用户测温模式开启蓝牙
+			else
+				F_Ble_En = Disable;
             #endif
 
 			eReadyTask_Sta = Ready_Refresh;
@@ -258,6 +260,8 @@ void Er1_Display_Sound(bit cmd)
 	if(Er1_First_Enter == 0)
 	{
 		Clr_Disp888();
+		lcd_badface_clr();
+		lcd_smileface_clr();
 		High_Precision_Flag = 0;
 		F_Disp_Dash = Enable;//开启er1错误屏幕显示 ---滚动刷屏
 		F_Disp_Temp_Status = 0;

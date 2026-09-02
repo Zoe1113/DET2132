@@ -248,7 +248,8 @@ void main(void)
 		#if Func_Ble
 			if( uSetFlag.bits.BleEnable == Enable )
 			{
-                if( eMain_Task != Task_BondTestmode &&  eTestmode_num != Insptectmode )
+				if( eMain_Task != Task_BondTestmode &&
+					( eTestmode_num == Earmode || eTestmode_num == Foreheadmode || eTestmode_num == Objectmode ) )
 				{
 					App_BleMode();
 				}

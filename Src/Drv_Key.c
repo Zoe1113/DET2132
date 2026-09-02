@@ -84,7 +84,7 @@ void Voice_Show_Init(void)
 		lcd_voice_en();
 		lcd_sound_off_en();
 
-		if( eTestmode_num != Earmode && eTestmode_num != Blackbodymode )
+		//if( eTestmode_num != Earmode && eTestmode_num != Blackbodymode )
 			// 打开震动
 			g_MotorSystick = Vibration_time;
 		
@@ -160,10 +160,14 @@ void APP_Enter_Blackbodymode(void)
 			Adc_Channel_Init(TPTONTC);	//某些模式会只采集tp故必须切回ntc采集，ADC初始化和通道切换
 			Er2_Display_Sound(RESET);//复位Er2错误
 			#if Func_Ble
-				if( !Port_Ble_Link )
-				{
-					lcd_ble_en();
-				}
+				F_Ble_En = Disable;
+				F_Ble_Blink = Disable;
+				Port_Ble_En = 0;
+				lcd_ble_clr();
+				Drv_UartTX_Disable();
+				Drv_UartRX_Disable();
+				F_Uart_Receive = 0;
+				eBle_Sta = Ble_Standby;
 			#endif
 			g_AgeSelectNum=Age_36;
 			eTestmode_num = Blackbodymode;	//代表进入黑体模式
@@ -432,35 +436,6 @@ void App_MemKeyProcess(void)
 			uErrFlag.g_ErrFlag = 0;		//清错误标志位
 			eReadyTask_Sta = Ready_ReadyOk;
 		}
-        // else if(!uKeyHold.bits.MemKeyHold && !uErrFlag.bits.Er2 && !uErrFlag.bits.Er6&&!F_MemKey_Deal&&eMain_Task == Task_ReadyMode&&eTestmode_num !=Insptectmode)
-        // {
-        //     //Clr_Disp();
-		// 	lcd_pc_clr();	//消隐耳套符号
-			
-		// 	lcd_smileface_clr();
-		// 	lcd_badface_clr();
-		// 	lcd_unit_c_clr();
-		// 	lcd_unit_f_clr();
-		// 	lcd_unit_cf_clr();
-		// 	Clr_Disp888();
-		// 	Clr_ModeSign();
-		// 	Clr_Age_Select();
-		// 	F_Disp_Dash = Disable;
-        //     lcd4 = DispTable[ 1 ] >> 8;
-		//     lcd5 = DispTable[ 1 ];
-		// 	LED_CloseAll();
-		// 	#if Func_White
-		// 		LED_White_En();
-		// 	#elif Func_3color
-		// 		LED_Green_En();		
-		// 	#endif
-		// 	g_3s_Count = CountDown_3s;	//开启背光
-		// 	if(eTestmode_num==Airmode)
-		// 	{
-		// 		eReadyTask_Sta = Ready_ReadyOk;
-		// 	}
-			
-        // }
     }
     //记忆键短按开关蜂鸣
     else
