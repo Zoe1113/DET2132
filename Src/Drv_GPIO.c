@@ -155,6 +155,10 @@ void Forehead_Ear_Check(bit cmd)
 			g_AgeSelectNum = Age_36;
 			F_Disp_Temp_Status = 0;
 			g_Switch_Temp_Flag = 1;//从耳额温切换到物温室温的标志位
+			if(eMain_Task == Task_Memorymode)
+			{
+				return;
+			}
         	eMain_Task = Task_ReadyMode;
 			eReadyTask_Sta = Ready_Refresh;
 			#if !Have_Voice_Func //蜂鸣款的在模式切换的时候，由于蜂鸣操作时延时。所以清屏和显示会有延时，为了解决这一问题把清屏的显示提前

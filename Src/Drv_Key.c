@@ -159,6 +159,8 @@ void APP_Enter_Blackbodymode(void)
 			HalKey_KeyClr();
 			Adc_Channel_Init(TPTONTC);	//某些模式会只采集tp故必须切回ntc采集，ADC初始化和通道切换
 			Er2_Display_Sound(RESET);//复位Er2错误
+			High_Precision_Flag = 0;
+			F_Disp_Temp_Status = 0;
 			#if Func_Ble
 				F_Ble_En = Disable;
 				F_Ble_Blink = Disable;

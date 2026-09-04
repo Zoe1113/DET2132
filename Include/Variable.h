@@ -50,7 +50,7 @@
 #if Soft_Code == 685
 	#define OffsetTable2open 		0 	//0:关闭第二张黑体表格   1:打开第二张黑体表格
 	#define ParamModif         		0	//0:关闭后门调参节约空间   1:打开后门调参（599words）
-	#define Check_Parameter			0	//绑定显示校验参数 1：开启，0：关闭
+	#define Check_Parameter			1	//绑定显示校验参数 1：开启，0：关闭
 	#define Func_TakeCoverAutoOn	0   //取下额温罩自动开机，1：开启，0：关闭
 	#define HumanRatio_Num  		20	//人体系数，正常人体系数为20；棒米算法为45
 	

@@ -266,6 +266,7 @@ static int16 Disp_Mem(void)
 {
 	int16 L_Temp = 0;
 	uint8 L_MemAdd;
+	uint8 L_Testmode;
 
 	if(!F_MemNull)
 	{
@@ -323,7 +324,10 @@ static int16 Disp_Mem(void)
 		I2C_Disable();
 		if(m_mode == Earmode || m_mode == Foreheadmode)
 		{
+			L_Testmode = eTestmode_num;
+			eTestmode_num = m_mode;
 			Disp_Age_Select(m_AgeSelectNum);
+			eTestmode_num = L_Testmode;
 		}
 		else
 		{
