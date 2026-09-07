@@ -46,7 +46,7 @@
 
 #define Soft_Code 686	//软件代码
 
-//磁吸,四色背光,普通LCD，语音，蓝牙，振动
+//三色背光,蜂鸣
 #if Soft_Code == 686
 	#define OffsetTable2open 		0 	//0:关闭第二张黑体表格   1:打开第二张黑体表格
 	#define ParamModif         		1	//0:关闭后门调参节约空间   1:打开后门调参（599words）
