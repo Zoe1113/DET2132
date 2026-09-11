@@ -495,6 +495,7 @@ void Disp_Version(uint16 num)
     lcd7 = DispTable[ R_LCD1 ];
 	lcd4 = DispTable[ R_LCD2 ] >> 8;
     lcd5 = DispTable[ R_LCD2 ];
+	lcd_point_en();
 }
 
 /**************************************************************************
@@ -742,7 +743,7 @@ void Disp_Lo(void)
 	lcd8 = 0x00;
     lcd9 = 0x00;
     lcd6 = S_L >> 8;
-    lcd7 = S_L;
+	lcd7 = S_L | (lcd7 & lcd_pc);
     lcd4 = S_o >> 8;
     lcd5= S_o;
     lcd_badface_clr();      //«Â–¶¡≥
@@ -763,7 +764,7 @@ void Disp_Hi(void)
 	lcd8 = 0x00;
     lcd9 = 0x00;
     lcd6 = S_H >> 8;
-    lcd7 = S_H;
+	lcd7 = S_H | (lcd7 & lcd_pc);
     lcd4 = S_i >> 8;
     lcd5 = S_i;
     lcd_badface_clr();      //«Â–¶¡≥
