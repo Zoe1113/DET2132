@@ -48,6 +48,12 @@ void App_Memory(void)
 {
 	static bit F_MemKey_ReleaseAfterEnter;
 
+	APP_Enter_Blackbodymode();
+	if(eMain_Task != Task_Memorymode)
+	{
+		return;
+	}
+
 	#if Func_Probecover
 		App_PCKeyProcess();		//耳套检测
 	#endif
@@ -185,6 +191,13 @@ static void Mem_Init(void)
 static void Disp_MemNo(void)
 {
 	uint8 i,j;
+
+	#if Have_Motor
+		if(!uSetFlag.bits.VoiceEnable)
+		{
+			g_MotorSystick = Vibration_time;
+		}
+	#endif
 
     //有几组显示几组的方法，当完全为空时，就只显示---
     if(F_MemNull)

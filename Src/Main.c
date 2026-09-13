@@ -122,6 +122,11 @@ void main(void)
 	}
 	// Param_Init();
 	// Delay10ms(100);
+
+	while((!Port_Mem||!Port_On||!Port_Set)&&!uStaFlag.bits.LowBat)
+	{
+		WDTR = 0x5A;	//Î¹¹·
+	}
 	while(1)
 	{
 		//Î¹¹·

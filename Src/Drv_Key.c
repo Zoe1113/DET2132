@@ -123,7 +123,7 @@ void Switch_Temp(void)
 //长按测量键8s进入黑体
 void APP_Enter_Blackbodymode(void)
 {
-	if(eReadyTask_Sta == Ready_ReadyOk || eReadyTask_Sta == Ready_DisEr2)
+	if(eMain_Task == Task_Memorymode || eReadyTask_Sta == Ready_ReadyOk || eReadyTask_Sta == Ready_DisEr2 || eReadyTask_Sta == Ready_Timeout)
 	{
 		if(uKeyPress.bits.OKeyPress)
 		{
@@ -172,6 +172,10 @@ void APP_Enter_Blackbodymode(void)
 				eBle_Sta = Ble_Standby;
 			#endif
 			g_AgeSelectNum=Age_36;
+			if(eTestmode_num == Insptectmode)
+			{
+				Clr_All_Memory();
+			}
 			eTestmode_num = Blackbodymode;	//代表进入黑体模式
 			eSleepTask_Sta = Sleep_false;	//设置当前任务状态为初始状态
 			eMain_Task = Task_ReadyMode;
@@ -270,6 +274,7 @@ void App_MemoryOnKeyProcess(void)
 	if( !uKeyPress.bits.OKeyPress )
 	{
 		uKeyRelease.bits.OKeyRelease = 0;
+		L_OnPressTime = 0;
 	}
 
 }
@@ -659,14 +664,11 @@ void HalKey_Set_KeyMode(uint8 function, strKey *sKey )
 			sKey->g_KeyFun &= ~En_Cp;	//非加速按
 			sKey->g_Key_preset_cnt = CNT_ShortLong;
 			break;
-		case Func_Long:
-			sKey->g_KeyFun &= ~En_Cp;	//非加速按
-			sKey->g_Key_preset_cnt = CNT_LongPress;
-			break;
 		case Func_Short_Continue:
 			sKey->g_KeyFun |= En_Cp; 	//加速按
 			sKey->g_Key_preset_cnt = CNT_EnterCP;
 			break;
+		case Func_Long:
 		default:
 			sKey->g_KeyFun &= ~En_Cp; 	//非加速按
 			sKey->g_Key_preset_cnt = CNT_LongPress;

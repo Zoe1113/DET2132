@@ -64,6 +64,9 @@ void LVD_Chk(void)
 **************************************************************************/
 void LBD_Chk( void )
 {
+	// uStaFlag.bits.LowBat = 1 ;
+	// uStaFlag.bits.midBat = 0 ;
+	// return;
 	uint8 i ;		//count with low-voltage
 
 	LBTM = 0x14 ;		//低电压<2.7V，内部电压检测

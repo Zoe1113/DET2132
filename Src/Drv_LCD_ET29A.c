@@ -368,7 +368,7 @@ void Disp_High_Precision(uint8 Unit, int16 Temp)
 {
     if(High_Precision_Flag)
     {
-        uint16 R_LCD1,R_LCD2,R_LCD3,R_LCD4,R_LCD5;
+		uint8 R_LCD1,R_LCD2,R_LCD3,R_LCD4,R_LCD5;
         
 
         //强制转换成无符号数

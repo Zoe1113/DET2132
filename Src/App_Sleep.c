@@ -223,6 +223,7 @@ void App_Sleep(void)
 							eSleepTask_Sta = Sleep_false;
 							eMain_Task = Task_InitMode;
 							eInitTask_Sta = Init_Err;
+							uKeyRelease.bits.OKeyRelease = 1;
 
 						}
 						else
