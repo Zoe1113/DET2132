@@ -72,7 +72,7 @@
 
 //三色背光,蜂鸣
 #if Soft_Code == 686
-	#define OffsetTable2open 		0 	//0:关闭第二张黑体表格   1:打开第二张黑体表格
+	#define OffsetTable2open 		1 	//0:关闭第二张黑体表格   1:打开第二张黑体表格
 	#define ParamModif         		1	//0:关闭后门调参节约空间   1:打开后门调参（599words）
 	#define Check_Parameter			1	//绑定显示校验参数 1：开启，0：关闭
 	#define Func_TakeCoverAutoOn	0   //取下额温罩自动开机，1：开启，0：关闭
