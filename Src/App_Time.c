@@ -45,6 +45,10 @@ void Time_Creat_20ms_50ms(void)
 {
 	g_10ms_Count++;
 
+	if(g_10ms_Count >= 10)
+	{
+		g_10ms_Count = 0;
+	}
 	if(g_10ms_Count%2 == 0)
 	{
 		F_20ms = 1;

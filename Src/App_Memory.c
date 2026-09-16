@@ -75,19 +75,20 @@ void App_Memory(void)
 			lcd_obj_clr();										//清除物温标志
 			lcd_ear_clr();									//清除耳温标志
 			Disp_MemNo();
-			LED_CloseAll();
-			#if Func_White
-				LED_White_En();
-			#elif Func_3color
-				LED_Green_En();		
-			#endif
-			g_3s_Count = CountDown_3s;	//开启背光3s倒计时
 		}
 		else
 		{
 			//记忆为空，显示---
 			Disp_MemNo();
 		}
+		//首次进入时无论记忆是否为空，都开启背光
+		LED_CloseAll();
+		#if Func_White
+			LED_White_En();
+		#elif Func_3color
+			LED_Green_En();
+		#endif
+		g_3s_Count = CountDown_3s;	//开启背光3s倒计时
 		F_Mem_FirstEnter = 1;	//置已进入标志位
 		F_MemNo_Disp = 1;	//保持当前按下过程不再刷新到下一组序号
 		F_Mem_Disp = F_MemNull;	//有记忆时等待松开后显示第一组数据，空记忆时不触发数据显示
@@ -116,34 +117,41 @@ void App_Memory(void)
 		
 	}
 
-	//如果抬起，且未更新过记忆值，则更新记忆值
-	if ( uKeyRelease.bits.MemKeyRelease && !F_Mem_Disp )
+	//松开后始终解锁下一次按下，空记忆也需要响应按键和续时
+	if ( uKeyRelease.bits.MemKeyRelease )
 	{
 		Auto_TurnOff_Time_Sel();//自动关机
-		F_DispNtc_Time_Date_En = 1;
 		uKeyRelease.bits.MemKeyRelease = 0;
 		F_MemNo_Disp = 0;		//清记忆序号显示刷新标志位
-		F_Mem_Disp = 1;
-		L_Temp = Disp_Mem();
-		if( L_Temp )
+		if( F_MemNull )
 		{
-			if( m_mode == Earmode || m_mode == Foreheadmode) 
-            {
-				Fever_alarm(L_Temp ,m_AgeSelectNum);
-            }
-			else
-			{
-				LED_CloseAll();
-                #if Func_White
-					LED_White_En();
-				#elif Func_3color
-					LED_Green_En();		
-				#endif
-			}
-			g_3s_Count = CountDown_3s;		//开启背光3s倒计时
-			
+			F_DispNtc_Time_Date_En = 0;
+			F_Mem_Disp = 1;
 		}
-		Delay10ms(50);
+		else if( !F_Mem_Disp )
+		{
+			F_DispNtc_Time_Date_En = 1;
+			F_Mem_Disp = 1;
+			L_Temp = Disp_Mem();
+			if( L_Temp )
+			{
+				if( m_mode == Earmode || m_mode == Foreheadmode)
+				{
+					Fever_alarm(L_Temp ,m_AgeSelectNum);
+				}
+				else
+				{
+					LED_CloseAll();
+					#if Func_White
+						LED_White_En();
+					#elif Func_3color
+						LED_Green_En();
+					#endif
+				}
+				g_3s_Count = CountDown_3s;		//开启背光3s倒计时
+			}
+			Delay10ms(50);
+		}
 	}
 	if(F_MemKey_ReleaseAfterEnter && uKeyHold.bits.MemKeyHold)
 	{

@@ -290,7 +290,7 @@ void App_SetKeyProcess(void)
         uKeyRelease.bits.SetKeyRelease = 0;
 
         #if Nation	//长按切换物温室温仅国外模式(Nation=1)有效
-        if(	uKeyHold.bits.SetKeyHold && !uErrFlag.bits.Er2)			//如果长按三秒
+		if(	uKeyHold.bits.SetKeyHold && !F_SKey_Deal && !uErrFlag.bits.Er2)	//同一次按住只处理一次长按
         {
             Auto_TurnOff_Time_Sel();	//按下关机时间清0
             F_SKey_Deal = 1;
@@ -480,7 +480,7 @@ void App_PCKeyProcess(void)
 		{
 			lcd_pc_clr();	//消隐耳套符号
 		}
-		if (eTestmode_num == Objectmode  )
+		if (eTestmode_num == Objectmode&& !uErrFlag.bits.Er2 )
 		{
 			uErrFlag.g_ErrFlag = 0;	//清除其他错误
 			uErrFlag.bits.Er6 = 1;

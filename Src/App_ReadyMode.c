@@ -311,9 +311,20 @@ void Er2_Display_Sound(bit cmd)
 		if( uSetFlag.bits.VoiceEnable == 1 )
 		{
 			#if Have_Voice_Func	//错误语音播报
-				g_DiDo = (uint16)uErrFlag.g_ErrFlag;
-				voice_stop();
-				PlayStatueParam(1 , Play_Errmsg,0);
+				if( eMain_Task == Task_Testingmode && eTestmode_num == Earmode )
+				{
+					//耳温测量过程的Er2仅蜂鸣，不播报错误语音
+					BZ_Beep50();
+					BZ_Beep50();
+					BZ_Beep50();
+					BZ_Beep50();
+				}
+				else
+				{
+					g_DiDo = (uint16)uErrFlag.g_ErrFlag;
+					voice_stop();
+					PlayStatueParam(1 , Play_Errmsg,0);
+				}
 			#else
 				BZ_Beep50();    //ER2报错，蜂鸣4声
 				BZ_Beep50();

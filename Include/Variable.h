@@ -44,7 +44,7 @@
 
 #define Distence_En 0     			//1:开启测距功能   0:关闭测距功能
 
-#define Soft_Code 686	//软件代码
+#define Soft_Code 685	//软件代码
 
 //磁吸,四色背光,普通LCD，语音，蓝牙，振动
 #if Soft_Code == 685

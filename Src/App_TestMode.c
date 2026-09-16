@@ -339,7 +339,13 @@ void App_TestingMode(void)
                     eBle_Sta = Ble_UploadData;
                 #endif
             }
-            if( uSetFlag.bits.VoiceEnable == 1 )
+			#if Have_Voice_Func
+				//耳温测量Er2立即蜂鸣，并锁存已提示状态，返回就绪后不重复播报
+				if( uErrFlag.bits.Er2 && eTestmode_num == Earmode )
+					Er2_Display_Sound(RUN);
+			#endif
+			//其他Er2由返回就绪态后的Er2_Display_Sound统一提示
+			if( uSetFlag.bits.VoiceEnable == 1 && !uErrFlag.bits.Er2 )
             {
                 #if Have_Voice_Func
 					if( eTestmode_num != Earmode && eTestmode_num != Blackbodymode)
@@ -407,7 +413,7 @@ void App_TestingMode(void)
 					}
                 #endif
             }
-            else
+			else if( uSetFlag.bits.VoiceEnable == 0 )
             {
                 #if Have_Motor
                     if( eTestmode_num != Earmode && eTestmode_num != Blackbodymode )

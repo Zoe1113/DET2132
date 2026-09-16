@@ -2,10 +2,10 @@
 TableSize=-1, -1, -1
 BreakpointCount=0
 [Breakpoint_0]
-State=0
+State=1
 LocationType=0
-FileName=.\Src\App_Param.c
-FileLine=249
+FileName=.\Src\App_Core.c
+FileLine=424
 HitCountType=0
 HitThreshold=1
 Visible=1
@@ -17,8 +17,8 @@ DumpRamRegions=
 [Breakpoint_1]
 State=1
 LocationType=0
-FileName=.\Src\App_Voice.c
-FileLine=113
+FileName=.\Src\App_Core.c
+FileLine=420
 HitCountType=0
 HitThreshold=1
 Visible=1

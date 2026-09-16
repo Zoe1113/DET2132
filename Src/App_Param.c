@@ -42,6 +42,9 @@ uint8 g_Earcap40;		//变温增加
 void Param_Init(void)
 {
 	I2C_masterInit();
+	//先使识别码失效，避免重新初始化途中掉电后接受未完成的参数
+	I2C_Byte_W(I2C_Add_IdentifyCode, IdentifyCode ^ 0xFF);
+	Delay1ms(5);
 	g_CheckSum = 0x00;
 
 	I2C_Byte_W(I2C_Add_Cali25TP, 0x00);
@@ -134,11 +137,15 @@ void Param_Init(void)
 	I2C_Byte_W(I2C_Add_CheckSum, g_CheckSum);		//存校验和(校验和一定识别码之前写入)
 	Delay1ms(5);
 
-	I2C_Byte_W(I2C_Add_IdentifyCode, IdentifyCode);		//识别码
+	I2C_Disable();
+	Probecover_Param_Init();
+
+	//耳套参数初始化内部会关闭I2C，重新开启后最后写入有效识别码
+	I2C_masterInit();
+	I2C_Byte_W(I2C_Add_IdentifyCode, IdentifyCode);		//全部参数初始化完成标记
 	Delay1ms(5);
 
 	I2C_Disable();
-	Probecover_Param_Init();
 }
 
 /**************************************************************************
